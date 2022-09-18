@@ -1,0 +1,3 @@
+# This chart only supports layer 2 mode at the moment.
+ipAddressPools: []
+l2Advertisements: []

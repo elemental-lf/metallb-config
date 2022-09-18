@@ -1,0 +1,20 @@
+{{- $envAll := . }}
+{{- range .Values.ipAddressPools }}
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "metallb-config.labels" $envAll | nindent 4 }}
+spec:
+{{- with .addresses }}
+  addresses:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
+{{- if not (hasKey . "autoAssign") }}
+  autoAssign: {{ true }}
+{{- else }}
+  autoAssign: {{ .autoAssign }}
+{{- end }}
+  avoidBuggyIPs: {{ .avoidBuggyIPs | default false }}
+{{- end }}
